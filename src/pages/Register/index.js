@@ -102,9 +102,7 @@ export default function Register() {
             placeholder="Your password"
           />
         </label>
-        <button type="submit" onClick={toast.success('test')}>
-          Create account
-        </button>
+        <button type="submit">Create account</button>
       </Form>
     </Container>
   );
