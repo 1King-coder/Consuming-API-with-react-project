@@ -14,7 +14,6 @@ export default function Students() {
     async function getData() {
       const response = await axios.get('/students');
 
-      console.log(response.data);
       setStudents(response.data);
     }
     getData();
@@ -35,12 +34,14 @@ export default function Students() {
                 <FaUserCircle size={36} />
               )}
             </ProfilePicture>
+
             <span>{student.nome}</span>
             <span>{student.email}</span>
 
             <Link to={`/student/${student.id}/edit`}>
               <FaEdit size={16} />
             </Link>
+
             <Link to={`/student/${student.id}/delete`}>
               <FaWindowClose size={16} />
             </Link>
