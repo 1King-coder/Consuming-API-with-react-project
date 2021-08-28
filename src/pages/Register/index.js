@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { isEmail } from 'validator';
 import { toast } from 'react-toastify';
+import { get } from 'lodash';
 // import { useDispatch } from 'react-redux';
 
-import { get } from 'lodash';
 import { Container } from '../../styles/GlobalStyles';
+import Loading from '../../components/Loading';
 import { Form } from './styled';
 import axios from '../../services/axios';
 import history from '../../services/history';
@@ -15,8 +16,10 @@ export default function Register() {
   const [email, setEmail] = useState('');
   const [nome, setNome] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   async function register() {
+    setIsLoading(true);
     try {
       await axios.post('/users/', {
         nome,
@@ -25,11 +28,13 @@ export default function Register() {
       });
 
       toast.success(`Successfuly registered.`);
+      setIsLoading(false);
 
       history.push('/login');
     } catch (e) {
       const errors = get(e, 'response.data.errors', []);
       errors.map((error) => toast.error(error));
+      setIsLoading(false);
     }
   }
 
@@ -59,6 +64,8 @@ export default function Register() {
 
   return (
     <Container>
+      <Loading isLoading={isLoading} />
+
       <h1>Register</h1>
 
       <Form onSubmit={handleSubmit}>
