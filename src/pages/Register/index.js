@@ -40,29 +40,16 @@ export default function Register() {
     if (nome.length < 3 || nome.length > 255) {
       formErrors = true;
       toast.error('Field name must have between 3 and 255 characteres.');
-      // notify({
-      //   id: 'error',
-      //   msg: 'Field name must have between 3 and 255 characteres.',
-      // });
     }
 
     if (password.length < 6 || password.length > 50) {
       formErrors = true;
       toast.error('Your password must have between 6 and 50 characteres.');
-      // notify({
-      //   id: 'error',
-      //   msg: 'Your password must have between 6 and 50 characteres.',
-      // });
     }
 
     if (!isEmail(email)) {
-      // eslint-disable-next-line
       formErrors = true;
       toast.error('Invalid E-mail.');
-      // notify({
-      //   id: 'error',
-      //   msg: 'Invalid E-mail.',
-      // });
     }
 
     if (formErrors) return;
@@ -96,7 +83,7 @@ export default function Register() {
         <label htmlFor="password">
           Password:
           <input
-            type="text"
+            type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Your password"
