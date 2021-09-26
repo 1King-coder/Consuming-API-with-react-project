@@ -57,6 +57,10 @@ export default createGlobalStyle`
     background: white;
   }
 
+  h1 {
+    margin-bottom: 20px;
+  }
+
 `;
 
 export const Container = styled.section`
