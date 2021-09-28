@@ -39,14 +39,21 @@ export default function Students() {
   const handleDelete = async (e, id, index) => {
     e.persist();
     try {
+      setIsLoading(true);
       await axios.delete(`/students/${id}`);
 
       const newStudents = [...students];
       newStudents.splice(index, 1);
       setStudents(newStudents);
+
+      return setIsLoading(false);
     } catch (err) {
-      const errors = get(err, 'response.data.errors', []);
-      errors.map((error) => toast.error(error));
+      const status = get(err, 'response.status', 0);
+      if (status === 401) {
+        return toast.error('You need to log');
+      }
+
+      return toast.error('ocorreu um erro.');
     }
   };
 
