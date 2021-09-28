@@ -50,7 +50,7 @@ export default function Students() {
     } catch (err) {
       const status = get(err, 'response.status', 0);
       if (status === 401) {
-        return toast.error('You need to log');
+        return toast.error('You need to login.');
       }
 
       return toast.error('ocorreu um erro.');
