@@ -131,10 +131,10 @@ export default function Student({ match }) {
     try {
       setIsLoading(true);
 
-      await axios.put(`/students/${id}`, studentData);
+      const { data } = await axios.put(`/students/${id}`, studentData);
 
       setIsLoading(false);
-      toast.success('Student successfuly edited.');
+      toast.success(`Student ${data.nome} successfuly edited.`);
     } catch (err) {
       setIsLoading(false);
       const errors = get(err, 'response.data.errors', []);
