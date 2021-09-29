@@ -10,7 +10,7 @@ import {
 
 import { toast } from 'react-toastify';
 import { Container } from '../../styles/GlobalStyles';
-import { StudentContainer, ProfilePicture } from './styled';
+import { StudentContainer, ProfilePicture, NewStudent } from './styled';
 import Loading from '../../components/Loading';
 import axios from '../../services/axios';
 
@@ -61,6 +61,7 @@ export default function Students() {
     <Container>
       <Loading isLoading={isLoading} />
       <h1>Students</h1>
+      <NewStudent to="/student/">Register a new Student</NewStudent>
       <StudentContainer>
         {students.map((student, index) => (
           <div key={String(student.id)}>
@@ -77,11 +78,14 @@ export default function Students() {
             <span>{student.nome}</span>
             <span>{student.email}</span>
 
-            <Link to={`/students/${student.id}`}>
+            <Link to={`/student/${student.id}/edit`}>
               <FaEdit size={16} />
             </Link>
 
-            <Link onClick={handleDeleteAsk} to={`/students/${student.id}`}>
+            <Link
+              onClick={handleDeleteAsk}
+              to={`/student/${student.id}/delete`}
+            >
               <FaWindowClose size={16} />
             </Link>
 

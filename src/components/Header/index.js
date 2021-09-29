@@ -33,11 +33,11 @@ export default function Header() {
           <FaUserAlt size={24} />
         </Link>
         {isLoggedIn ? (
-          <Link onClick={handleLogout} to="/Logout">
+          <Link onClick={handleLogout} to="/logout">
             <FaSignOutAlt size={24} />
           </Link>
         ) : (
-          <Link to="/Login">
+          <Link to="/login">
             <FaSignInAlt size={24} />
           </Link>
         )}
