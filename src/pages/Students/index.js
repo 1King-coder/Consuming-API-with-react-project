@@ -45,6 +45,7 @@ export default function Students() {
       const newStudents = [...students];
       newStudents.splice(index, 1);
       setStudents(newStudents);
+      toast.success('Student successfuly deleted.');
 
       return setIsLoading(false);
     } catch (err) {

@@ -3,23 +3,26 @@ import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
+import { FaEdit, FaUserCircle } from 'react-icons/fa';
 import { isEmail, isInt, isFloat } from 'validator';
 
+import { Link } from 'react-router-dom';
 import { Container } from '../../styles/GlobalStyles';
-import { Form } from './styled';
+import { Form, ProfilePicture, Title } from './styled';
 import Loading from '../../components/Loading';
 import axios from '../../services/axios';
 import history from '../../services/history';
 import * as actions from '../../store/modules/auth/actions';
 
 export default function Student({ match }) {
-  const id = get(match, 'params.id', 0);
+  const id = get(match, 'params.id', '');
   const [nome, setNome] = useState('');
   const [sobrenome, setSobrenome] = useState('');
   const [email, setEmail] = useState('');
   const [idade, setIdade] = useState('');
   const [altura, setAltura] = useState('');
   const [peso, setPeso] = useState('');
+  const [photo, setPhoto] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
@@ -32,8 +35,7 @@ export default function Student({ match }) {
       try {
         setIsLoading(true);
         const { data } = await axios.get(`students/${id}`);
-        // eslint-disable-next-line
-        const photo = await get(data, 'Fotos[0].url', '');
+        const studentPhoto = await get(data, 'Files[0].url', '');
 
         setNome(data.nome);
         setSobrenome(data.sobrenome);
@@ -41,6 +43,7 @@ export default function Student({ match }) {
         setIdade(data.idade);
         setAltura(data.altura);
         setPeso(data.peso);
+        setPhoto(studentPhoto);
 
         return setIsLoading(false);
       } catch (err) {
@@ -173,7 +176,17 @@ export default function Student({ match }) {
     <Container>
       <Loading isLoading={isLoading} />
 
-      <h1>{id ? 'Edit Student' : 'Register a new Student'}</h1>
+      <Title>{id ? 'Edit Student' : 'Register a new Student'}</Title>
+
+      {id && (
+        <ProfilePicture>
+          {photo ? <img src={photo} alt={nome} /> : <FaUserCircle size={180} />}
+          <Link to={`/photos/${id}`}>
+            <FaEdit size={24} />
+          </Link>
+        </ProfilePicture>
+      )}
+
       <Form onSubmit={handleSubmit}>
         <input
           type="text"
